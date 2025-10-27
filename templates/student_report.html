@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2 class="page-title">Báo cáo sinh viên</h2>
+
+    <div class="actions-row">
+        <a class="btn btn-outline" href="{{ url_for('student_bp.list_students') }}">← Quay lại danh sách</a>
+    </div>
+</div>
+
+<div class="card">
+    <h3 class="card-title">Thông tin chi tiết</h3>
+
+    <ul class="report-list">
+        <li>
+            <span class="report-key">Họ tên</span>
+            <span class="report-value">{{ report.name }}</span>
+        </li>
+
+        <li>
+            <span class="report-key">MSSV</span>
+            <span class="report-value">{{ report.student_id }}</span>
+        </li>
+
+        <li>
+            <span class="report-key">Lớp</span>
+            <span class="report-value">{{ report.classroom }}</span>
+        </li>
+
+        <li>
+            <span class="report-key">Điểm giữa kỳ</span>
+            <span class="report-value">{{ report.midterm }}</span>
+        </li>
+
+        <li>
+            <span class="report-key">Điểm cuối kỳ</span>
+            <span class="report-value">{{ report.final }}</span>
+        </li>
+
+        <li>
+            <span class="report-key">Điểm tổng kết</span>
+            <span class="report-value">{{ report.final_score }}</span>
+        </li>
+
+        <li>
+            <span class="report-key">Xếp loại</span>
+            <span class="report-value">{{ report.rank }}</span>
+        </li>
+
+        {% if report.gpa_estimate is defined %}
+        <li>
+            <span class="report-key">GPA ước tính</span>
+            <span class="report-value">{{ report.gpa_estimate }}</span>
+        </li>
+        {% endif %}
+
+        {% if report.academic_warning is defined %}
+        <li>
+            <span class="report-key">Cảnh báo học vụ</span>
+            <span class="report-value">
+                {% if report.academic_warning %}
+                    <span class="report-warning-yes">CÓ</span>
+                {% else %}
+                    <span class="report-warning-no">Không</span>
+                {% endif %}
+            </span>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+
+{% endblock %}

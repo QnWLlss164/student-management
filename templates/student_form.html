@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2 class="page-title">
+        {{ 'Sửa sinh viên' if student else 'Thêm sinh viên' }}
+    </h2>
+
+    <div class="actions-row">
+        <a class="btn btn-outline" href="{{ url_for('student_bp.list_students') }}">← Quay lại danh sách</a>
+    </div>
+</div>
+
+<div class="card form-card">
+    <form method="POST">
+        <div class="form-control">
+            <label>MSSV</label>
+            <input
+                type="text"
+                name="student_id"
+                value="{{ student.student_id if student else '' }}"
+                required
+            >
+        </div>
+
+        <div class="form-control">
+            <label>Tên</label>
+            <input
+                type="text"
+                name="name"
+                value="{{ student.name if student else '' }}"
+                required
+            >
+        </div>
+
+        <div class="form-control">
+            <label>Lớp</label>
+            <input
+                type="text"
+                name="classroom"
+                value="{{ student.classroom if student else '' }}"
+            >
+        </div>
+
+        <div class="form-control">
+            <label>Điểm giữa kỳ</label>
+            <input
+                type="number"
+                step="0.01"
+                name="midterm"
+                value="{{ student.midterm if student else '' }}"
+                required
+            >
+        </div>
+
+        <div class="form-control">
+            <label>Điểm cuối kỳ</label>
+            <input
+                type="number"
+                step="0.01"
+                name="final"
+                value="{{ student.final if student else '' }}"
+                required
+            >
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Lưu</button>
+            <a class="btn btn-outline" href="{{ url_for('student_bp.list_students') }}">Huỷ</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

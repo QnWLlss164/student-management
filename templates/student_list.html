@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2 class="page-title">Danh sách sinh viên</h2>
+
+    <div class="actions-row">
+        <a class="btn btn-primary" href="{{ url_for('student_bp.new_student') }}">+ Thêm sinh viên</a>
+    </div>
+</div>
+
+<div class="table-wrapper card">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>MSSV</th>
+                <th>Tên</th>
+                <th>Lớp</th>
+                <th>Giữa kỳ</th>
+                <th>Cuối kỳ</th>
+                <th>Điểm tổng</th>
+                <th>Xếp loại</th>
+                <th style="text-align:right;">Hành động</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for s in students %}
+            <tr>
+                <td>{{ s.student_id }}</td>
+                <td style="font-weight:500;">{{ s.name }}</td>
+                <td>{{ s.classroom }}</td>
+                <td>{{ s.midterm }}</td>
+                <td>{{ s.final }}</td>
+                <td style="font-weight:600;">{{ s.final_score }}</td>
+                <td>
+                    {% set rank = s.rank %}
+                    {% if rank == 'Giỏi' %}
+                        <span class="badge-rank good">{{ rank }}</span>
+                    {% elif rank == 'Khá' %}
+                        <span class="badge-rank ok">{{ rank }}</span>
+                    {% elif rank == 'Trung bình' %}
+                        <span class="badge-rank medium">{{ rank }}</span>
+                    {% else %}
+                        <span class="badge-rank bad">{{ rank }}</span>
+                    {% endif %}
+                </td>
+                <td style="text-align:right; white-space:nowrap;">
+                    <a class="btn-ghost-sm" href="{{ url_for('student_bp.edit_student', db_id=s.db_id) }}">Sửa</a>
+                    |
+                    <form style="display:inline" method="POST" action="{{ url_for('student_bp.remove_student', db_id=s.db_id) }}">
+                        <button class="btn-ghost-sm" type="submit" onclick="return confirm('Xóa sinh viên này?')">Xóa</button>
+                    </form>
+                    |
+                    <a class="btn-ghost-sm" href="{{ url_for('student_bp.student_report', db_id=s.db_id) }}">Báo cáo</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
